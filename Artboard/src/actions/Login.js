@@ -23,8 +23,8 @@ export default class Login extends Component {
     constructor(props) {
          super(props);
          this.state = {
-             tel: '111',
-             pass: '11',
+             tel: '',
+             pass: '',
          };
 
     }
@@ -32,9 +32,14 @@ export default class Login extends Component {
     componentWillMount() {
 
         Storage.get(Global.user_key, (result) => {
+
+            if (result == null) {
+                return
+            }
+
             this.setState({
-                tel: result.telephone,
-                pass: result.password
+                tel: result.telephone ? result.telephone : '',
+                pass: result.password ? result.pass : ''
             });
         })
     }
