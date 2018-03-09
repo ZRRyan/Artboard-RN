@@ -73,7 +73,7 @@ export default class Login extends Component {
                     <TextInput style={styles.inputView} placeholder='请输入密码' secureTextEntry={true} selectionColor = {AColor.color_red} onChangeText={(text) => {this.setState({pass: text});}}/>
                 </View>
 
-                <TouchableHighlight style = {[styles.login, {backgroundColor: this.isValidTelAndPass() == true ? AColor.color_blue : 'none'}]} underlayColor={this.isValidTelAndPass() == true ? AColor.color_blue : AColor.color_white} onPress={()=>this.loginBtnClick()}>
+                <TouchableHighlight style = {[styles.login, {backgroundColor: this.isValidTelAndPass() == true ? AColor.color_blue : 'none'}]} underlayColor='none' onPress={()=>this.loginBtnClick()}>
                     <Text style = {[styles.loginText, {color: this.isValidTelAndPass() == true ? AColor.color_white : AColor.color_lightBlue}]}>登录</Text>
                 </TouchableHighlight>
             </ScrollView>
