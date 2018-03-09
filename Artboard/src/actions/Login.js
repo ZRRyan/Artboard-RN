@@ -11,34 +11,32 @@ import {
     Image,
     Alert
 } from 'react-native';
-
+import 'whatwg-fetch';
 import AColor from "../config/AColor";
+import NetRequest from "../config/NetRequest";
+import Global from "../config/Global"
+import { AsyncStorage } from 'react-native';
+import Storage from "../storage/Storage"
 
 export default class Login extends Component {
 
     constructor(props) {
          super(props);
          this.state = {
-           tel: '',
-           pass: ''
+             tel: '111',
+             pass: '11',
          };
+
     }
 
-    loginBtnClick() {
-        if (this.state.tel === '' || this.state.pass === '') {
-            Alert.alert('','手机号或密码不能为空', [{text:'好'}])
-            return;
-        }
+    componentWillMount() {
 
-        if (!RegExp('^1[3,5,8][0-9]{9}$').test(this.state.tel)) {
-            Alert.alert('','手机号格式不正确', [{text:'好'}])
-            return;
-        }
-
-        if (this.state.pass.length < 6) {
-            Alert.alert('','密码不能少于6位', [{text:'好'}])
-            return;
-        }
+        Storage.get(Global.user_key, (result) => {
+            this.setState({
+                tel: result.telephone,
+                pass: result.password
+            });
+        })
     }
 
     isValidTelAndPass () {
@@ -57,6 +55,53 @@ export default class Login extends Component {
         return true
     }
 
+    static showAlert(msg) {
+        Alert.alert('', msg, [{text:'好'}])
+    }
+
+    loginBtnClick() {
+
+        if (this.state.tel === '' || this.state.pass === '') {
+            Login.showAlert('手机号或密码不能为空')
+            return;
+        }
+
+        if (!RegExp('^1[3,5,8][0-9]{9}$').test(this.state.tel)) {
+            Login.showAlert('手机号格式不正确')
+            return;
+        }
+
+        if (this.state.pass.length < 6) {
+            Login.showAlert('密码不能少于6位')
+            return;
+        }
+
+        this.requestLogin()
+
+
+    }
+
+
+    requestLogin() {
+        let url = `${NetRequest.SERVER_DOMAIN}sys/login`;
+        let params = {telephone:this.state.tel, password: this.state.pass};
+
+        NetRequest.post(url, params, (responseJson) => {
+            if (responseJson.code == 200) {
+                Storage.save(Global.user_key, responseJson.data)
+                Login.showAlert('登录成功')
+            } else  {
+                Login.showAlert(responseJson.msg)
+            }
+        }, (error) => {
+            Login.showAlert('登录失败:' + error)
+        })
+    }
+
+
+
+
+
     render() {
         return (
             <ScrollView style = {styles.container} keyboardDismissMode="on-drag" keyboardShouldPersistTaps={false} scrollEnabled={false}>
@@ -67,13 +112,13 @@ export default class Login extends Component {
                 <Image style={styles.hello} source={require('../images/login_hello.png')} resizeMode='contain'/>
 
                 <View style = {styles.tel}>
-                    <TextInput style={styles.inputView} placeholder='请输入手机号' keyboardType = "number-pad"   selectionColor = {AColor.color_red} onChangeText={(text) => {this.setState({tel: text});}}/>
+                    <TextInput value={this.state.tel} style={styles.inputView} placeholder='请输入手机号' keyboardType = "number-pad"   selectionColor = {AColor.color_red} onChangeText={(text) => {this.setState({tel: text});}}/>
                 </View>
                 <View style = {styles.pass}>
-                    <TextInput style={styles.inputView} placeholder='请输入密码' secureTextEntry={true} selectionColor = {AColor.color_red} onChangeText={(text) => {this.setState({pass: text});}}/>
+                    <TextInput value={this.state.pass} style={styles.inputView} placeholder='请输入密码' secureTextEntry={true} selectionColor = {AColor.color_red} onChangeText={(text) => {this.setState({pass: text});}}/>
                 </View>
 
-                <TouchableHighlight style = {[styles.login, {backgroundColor: this.isValidTelAndPass() == true ? AColor.color_blue : 'none'}]} underlayColor='none' onPress={()=>this.loginBtnClick()}>
+                <TouchableHighlight style = {[styles.login, {backgroundColor: this.isValidTelAndPass() == true ? AColor.color_blue : AColor.white}]} underlayColor='none' onPress={()=>this.loginBtnClick()}>
                     <Text style = {[styles.loginText, {color: this.isValidTelAndPass() == true ? AColor.color_white : AColor.color_lightBlue}]}>登录</Text>
                 </TouchableHighlight>
             </ScrollView>
@@ -144,7 +189,7 @@ const styles = StyleSheet.create({
         height: 44,
         borderRadius: 22,
         borderColor: AColor.color_lightBlue,
-        borderWidth: (Platform.OS==='ios' ? 1.0 : 1.5) / PixelRatio.get(),
+        borderWidth: 1,
         alignItems: 'center',
         justifyContent: 'center',
 
