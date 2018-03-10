@@ -9,14 +9,16 @@ import {
     PixelRatio,
     TouchableHighlight,
     Image,
-    Alert
+    Alert,
+    Navigator
 } from 'react-native';
 import 'whatwg-fetch';
 import AColor from "../config/AColor";
-import NetRequest from "../config/NetRequest";
+import NetRequest from "../util/NetRequest";
 import Global from "../config/Global"
 import { AsyncStorage } from 'react-native';
 import Storage from "../storage/Storage"
+import App from "../App";
 
 export default class Login extends Component {
 
@@ -39,7 +41,7 @@ export default class Login extends Component {
 
             this.setState({
                 tel: result.telephone ? result.telephone : '',
-                pass: result.password ? result.pass : ''
+                pass: result.password ? result.password : ''
             });
         })
     }
@@ -94,7 +96,7 @@ export default class Login extends Component {
         NetRequest.post(url, params, (responseJson) => {
             if (responseJson.code == 200) {
                 Storage.save(Global.user_key, responseJson.data)
-                Login.showAlert('登录成功')
+                this.onLoginSuccess()
             } else  {
                 Login.showAlert(responseJson.msg)
             }
@@ -103,9 +105,14 @@ export default class Login extends Component {
         })
     }
 
+    onLoginSuccess = () => {
 
-
-
+        this.props.navigator.push({
+                component: App,
+                title: '手机号登录',
+            }
+        );
+    }
 
     render() {
         return (
