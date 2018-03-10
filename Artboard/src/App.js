@@ -2,157 +2,81 @@ import React, { Component } from 'react';
 import {
     Platform,
     StyleSheet,
-    View,
-    Dimensions,
     Image
 } from 'react-native';
 import {StackNavigator, TabNavigator} from "react-navigation";
 
-import Global from '../src/config/Global'
+import AColor from '../src/config/AColor'
 import BroadList from '../src/actions/BroadList'
 import Discover from '../src/actions/Discover'
 import Mess from '../src/actions/Mess'
 import Me from '../src/actions/Me'
 import Login from '../src/actions/Login'
 
-const { width , height} = Dimensions.get('window');
 
-export default class App extends Component {
-    render() {
-        return(
-            <View style={{flex:1, backgroundColor: 'blue'}}>
-                <TabView></TabView>
-            </View>
-        )
-    }
-}
-//
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        marginTop: Platform.OS === 'ios' ? 20 : 0,
-        backgroundColor:'red'
-    },
-});
-
-
-// const MyNavScreen = ({ navigation, banner }) => (
-//     <ScrollView style={styles.container}>
-//
-//         {/*<Button*/}
-//             {/*onPress={() => navigation.navigate('Home')}*/}
-//             {/*title="Go to home tab"*/}
-//         {/*/>*/}
-//         {/*<Button*/}
-//             {/*onPress={() => navigation.navigate('Settings')}*/}
-//             {/*title="Go to settings tab"*/}
-//         {/*/>*/}
-//         {/*<Button*/}
-//             {/*onPress={() => navigation.goBack(null)}*/}
-//             {/*title="Go back"*/}
-//         {/*/>*/}
-//     </ScrollView>
-// );
-
-class MyNavScreen extends Component {
-    render() {
-        // const { navigate, banner } = this.props.navigation;
-        return (
-            <View style={styles.container}></View>
-        )
-    }
-}
-
-class BroadListScreen extends Component {
-    render() {
-        return (
-            <MyNavScreen>
-                <BroadList/>
-            </MyNavScreen>
-        )
-    }
-}
-
-class DiscoverScreen extends Component {
-    render() {
-        return (
-            <MyNavScreen>
-                <Discover/>
-            </MyNavScreen>
-        )
-    }
-}
-
-class MessScreen extends Component {
-    render() {
-        return (
-            <MyNavScreen>
-                <Mess/>
-            </MyNavScreen>
-        )
-    }
-}
-
-class MeScreen extends Component {
-    render() {
-        return (
-            <MyNavScreen>
-                <Me/>
-            </MyNavScreen>
-        )
-    }
-}
-
-
-
-const TabView = TabNavigator({
+export default Tab = TabNavigator({
     BroadList: {
-        screen: BroadListScreen,
+        screen: BroadList,
         navigationOptions: {
-            tabBarLabel: ' ',
+            tabBarLabel: '广场',
             tabBarIcon: ({ tintColor, focused }) => (
-                <Image style={{width: 21, height: 21, marginTop:10}} resizeMode='contain'
+                <Image style={{width: 21, height: 21}} resizeMode='contain'
                        source={focused ? require('../src/images/tabBar_list_selected.png') : require('../src/images/tabBar_list.png')}
                 />
             )
         },
     },
     Discover: {
-        screen: DiscoverScreen,
+        screen: Discover,
         navigationOptions: {
-            tabBarLabel: ' ',
+            tabBarLabel: '发现',
             tabBarIcon: ({ tintColor, focused }) => (
-                <Image style={{width: 21, height: 21, marginTop:10}} resizeMode='contain'
+                <Image style={{width: 21, height: 21}} resizeMode='contain'
                        source={focused ? require('../src/images/tabBar_home_selected.png') : require('../src/images/tabBar_home.png')}
                 />
             )
         },
     },
     Mess: {
-        screen: MessScreen,
+        screen: Discover,
         navigationOptions: {
-            tabBarLabel: ' ',
+            tabBarLabel: '聊天',
             tabBarIcon: ({ tintColor, focused }) => (
-                <Image style={{width: 21, height: 21, marginTop:10}} resizeMode='contain'
+                <Image style={{width: 21, height: 21}} resizeMode='contain'
                        source={focused ? require('../src/images/tabBar_chat_selected.png') : require('../src/images/tabBar_chat.png')}
                 />
             )
         },
     },
     Me: {
-        screen: MeScreen,
+        screen: Me,
         navigationOptions: {
-            tabBarLabel: ' ',
+            tabBarLabel: '我的',
             tabBarIcon: ({ tintColor, focused }) => (
-                <Image style={{width: 21, height: 21, marginTop:10}} resizeMode='contain'
+                <Image style={{width: 21, height: 21}} resizeMode='contain'
                        source={focused ? require('../src/images/tabBar_me_selected.png') : require('../src/images/tabBar_me.png')}
                 />
             )
         },
     },
 }, {
+    animationEnabled: false, // 切换页面时是否有动画效果
+    tabBarPosition: 'bottom', // 显示在底端，android 默认是显示在页面顶端的
+    swipeEnabled: false, // 是否可以左右滑动切换tab
+    backBehavior: 'none', // 按 back 键是否跳转到第一个Tab(首页)， none 为不跳转
     tabBarOptions: {
-        activeTintColor: Global.color_blue,
-        inactiveTintColor: Global.color_lightBlue
+        activeTintColor: AColor.color_blue,
+        inactiveTintColor: AColor.color_lightBlue,
+        showIcon: true, // android 默认不显示 icon, 需要设置为 true 才会显示
+        indicatorStyle: {
+            height: 0  // 如TabBar下面显示有一条线，可以设高度为0后隐藏
+        },
+        style: {
+            backgroundColor: '#fff', // TabBar 背景色
+            // height: 44
+        },
+        labelStyle: {
+            fontSize: 10, // 文字大小
+        },
     },
 });

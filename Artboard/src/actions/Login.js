@@ -9,8 +9,7 @@ import {
     PixelRatio,
     TouchableHighlight,
     Image,
-    Alert,
-    Navigator
+    Alert
 } from 'react-native';
 import 'whatwg-fetch';
 import AColor from "../config/AColor";
@@ -19,8 +18,16 @@ import Global from "../config/Global"
 import { AsyncStorage } from 'react-native';
 import Storage from "../storage/Storage"
 import App from "../App";
+import BroadList from "../actions/BroadList"
+import { StackNavigator } from 'react-navigation';
 
 export default class Login extends Component {
+
+
+
+    static navigationOptions = {
+        header: null
+    };
 
     constructor(props) {
          super(props);
@@ -106,15 +113,15 @@ export default class Login extends Component {
     }
 
     onLoginSuccess = () => {
-
-        this.props.navigator.push({
-                component: App,
-                title: '手机号登录',
-            }
-        );
+        this.props.navigation.replace('App')
     }
 
+
+
     render() {
+
+        // const { navigate } = this.props.navigation;
+
         return (
             <ScrollView style = {styles.container} keyboardDismissMode="on-drag" keyboardShouldPersistTaps={false} scrollEnabled={false}>
                 <View style = {styles.titleView}>
