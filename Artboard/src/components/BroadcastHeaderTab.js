@@ -61,7 +61,9 @@ const styles = StyleSheet.create({
     tabBtn: {
         marginLeft: 10,
         marginRight:10,
-        borderColor: AColor.color_blue
+        borderColor: AColor.color_blue,
+        borderBottomLeftRadius: 2,
+        borderBottomRightRadius: 2
     },
     recommend: {
 

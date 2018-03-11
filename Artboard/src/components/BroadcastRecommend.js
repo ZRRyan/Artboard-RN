@@ -11,6 +11,8 @@ import NetRequest from "../util/NetRequest";
 import Global from "../config/Global";
 import Storage from "../storage/Storage";
 import Login from "../actions/Login";
+import BroadcastItem from '../components/BroadcastItem'
+
 
 export default class BroadcastRecommend extends Component {
 
@@ -56,8 +58,10 @@ export default class BroadcastRecommend extends Component {
             <View>
                 <FlatList
                     data = {this.state.broadcasts}
-                    renderItem={({item}) => <Text>{item.id}</Text>}
+                    renderItem={({item}) => <BroadcastItem broadcast={item}/>}
+                    // renderItem={<BroadcastItem />}
                 />
+
             </View>
         )
     }

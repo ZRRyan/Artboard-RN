@@ -5,6 +5,7 @@ import BroadcastHeaderTab from '../components/BroadcastHeaderTab'
 import Global from "../config/Global";
 import Storage from "../storage/Storage";
 import BroadcastRecommend from '../components/BroadcastRecommend'
+import BroadcastFollow from '../components/BroadcastFollow'
 
 export default class Broadcast extends Component {
 
@@ -37,6 +38,8 @@ export default class Broadcast extends Component {
                 <BroadcastHeaderTab callback={(budge) => {this.titleBtnClick(budge)}}></BroadcastHeaderTab>'
                 <View style={styles.content}>
                     <BroadcastRecommend/>
+
+                    {/*<BroadcastFollow/>*/}
                 </View>
             </View>
         );
