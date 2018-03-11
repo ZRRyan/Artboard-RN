@@ -7,7 +7,7 @@ import {
 import {StackNavigator, TabNavigator} from "react-navigation";
 
 import AColor from '../src/config/AColor'
-import BroadList from '../src/actions/BroadList'
+import Broadcast from './actions/Broadcast'
 import Discover from '../src/actions/Discover'
 import Mess from '../src/actions/Mess'
 import Me from '../src/actions/Me'
@@ -16,7 +16,7 @@ import Login from '../src/actions/Login'
 
 export default Tab = TabNavigator({
     BroadList: {
-        screen: BroadList,
+        screen: Broadcast,
         navigationOptions: {
             tabBarLabel: '广场',
             tabBarIcon: ({ tintColor, focused }) => (

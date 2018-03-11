@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import {AppRegistry, StyleSheet} from 'react-native';
 import { StackNavigator } from 'react-navigation';
 import Login from '../actions/Login'
-import BroadList from '../actions/BroadList'
+import BroadList from '../actions/Broadcast'
 import App from '../App'
 import AColor from '../config/AColor'
 

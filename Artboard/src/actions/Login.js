@@ -18,7 +18,6 @@ import Global from "../config/Global"
 import { AsyncStorage } from 'react-native';
 import Storage from "../storage/Storage"
 import App from "../App";
-import BroadList from "../actions/BroadList"
 import { StackNavigator } from 'react-navigation';
 
 export default class Login extends Component {
@@ -119,9 +118,6 @@ export default class Login extends Component {
 
 
     render() {
-
-        // const { navigate } = this.props.navigation;
-
         return (
             <ScrollView style = {styles.container} keyboardDismissMode="on-drag" keyboardShouldPersistTaps={false} scrollEnabled={false}>
                 <View style = {styles.titleView}>
