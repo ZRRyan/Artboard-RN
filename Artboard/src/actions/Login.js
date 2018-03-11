@@ -11,7 +11,6 @@ import {
     Image,
     Alert
 } from 'react-native';
-import 'whatwg-fetch';
 import AColor from "../config/AColor";
 import NetRequest from "../util/NetRequest";
 import Global from "../config/Global"
@@ -96,11 +95,12 @@ export default class Login extends Component {
 
 
     requestLogin() {
-        let url = `${NetRequest.SERVER_DOMAIN}sys/login`;
+        let url = `${NetRequest.SERVER_DOMAIN}/sys/login`;
         let params = {telephone:this.state.tel, password: this.state.pass};
 
         NetRequest.post(url, params, (responseJson) => {
             if (responseJson.code == 200) {
+                Global.user = responseJson.data
                 Storage.save(Global.user_key, responseJson.data)
                 this.onLoginSuccess()
             } else  {

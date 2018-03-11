@@ -2,7 +2,7 @@ import {Component} from "react";
 
 export default class NetRequest extends Component {
 
-    static SERVER_DOMAIN = 'http://47.92.28.213:8088/ArtBoard/';
+    static SERVER_DOMAIN = 'http://47.92.28.213:8088/ArtBoard';
 
     /*get 网络请求*/
     static get(url, params, succ, fail) {
