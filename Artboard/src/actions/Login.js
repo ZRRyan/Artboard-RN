@@ -120,9 +120,9 @@ export default class Login extends Component {
     render() {
         return (
             <ScrollView style = {styles.container} keyboardDismissMode="on-drag" keyboardShouldPersistTaps={false} scrollEnabled={false}>
-                <View style = {styles.titleView}>
-                    <Text style = {styles.title}>登录</Text>
-                </View>
+                {/*<View style = {styles.titleView}>*/}
+                    {/*<Text style = {styles.title}>登录</Text>*/}
+                {/*</View>*/}
 
                 <Image style={styles.hello} source={require('../images/login_hello.png')} resizeMode='contain'/>
 
@@ -147,23 +147,23 @@ export default class Login extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 1
     },
 
-    titleView: {
-        justifyContent: 'center',
-        alignItems:'center',
-        marginTop:20,
-        height:44,
-    },
+    // titleView: {
+    //     justifyContent: 'center',
+    //     alignItems:'center',
+    //     marginTop:20,
+    //     height:44,
+    // },
 
-    title: {
-        fontSize: 17,
-        color: AColor.color_black,
-        fontWeight: 'bold'
-    },
+    // title: {
+    //     fontSize: 17,
+    //     color: AColor.color_black,
+    //     fontWeight: 'bold'
+    // },
     hello: {
-        marginTop: 80,
+        marginTop: 100,
         height:35,
     },
     tel: {
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         borderBottomWidth: 1,
-        borderColor: AColor.color_lightGray
+        borderColor: AColor.color_lightGray_alpha
     },
     pass: {
         marginTop: 20,
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems:'center',
         borderBottomWidth: 1,
-        borderColor: AColor.color_lightGray
+        borderColor: AColor.color_lightGray_alpha
     },
     inputView: {
         textAlign:'center',

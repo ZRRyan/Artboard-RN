@@ -32,7 +32,6 @@ export default class Broadcast extends Component {
 
 
     render() {
-
         return (
             <View style={styles.container}>
                 <BroadcastHeaderTab callback={(budge) => {this.titleBtnClick(budge)}}></BroadcastHeaderTab>'
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
         flex:1
     },
     content: {
-        backgroundColor: 'red',
         flex:1
     }
 });
