@@ -10,7 +10,9 @@ import {
 } from 'react-native';
 import AColor from '../config/AColor';
 import TimeTool from '../util/TimeTool'
-
+import NetRequest from '../util/NetRequest';
+import RNFS from 'react-native-fs';
+import CacheImage from '../components/CacheImage';
 
 const imgWidth = Dimensions.get('window').width - 87
 
@@ -23,7 +25,9 @@ export default class BroadcastItem extends Component {
 
             <View style={styles.container}>
                 <View style={styles.left}>
-                    <Image style={styles.header} resizeMode='contain' source={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbImage) ? {uri: this.props.broadcast.sender.avatarPicture.thumbImage} : require('../images/header_place.png')}/>
+
+                    <CacheImage resizeMode='contain' style={[styles.header, {display: this.props.broadcast.pictures.count > 0 ? true : false}]} resizeMode='cover' thumbil={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbnail) ? (this.props.broadcast.sender.avatarPicture.thumbnail) : ''} bigImage={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.bigimg) ? this.props.broadcast.sender.avatarPicture.bigimg : ''} thumbilPath={RNFS.DocumentDirectoryPath + 'header_thumbil_' + this.props.broadcast.sender.avatarPicture.thumbnail + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'header_' + this.props.broadcast.sender.avatarPicture.bigimg + '.jpg'} placeholder={require('../images/header_place.png')}/>
+
                 </View>
                 <View style={styles.right}>
                     <View style={styles.nickname_time}>
@@ -38,7 +42,8 @@ export default class BroadcastItem extends Component {
                         {this.props.broadcast.content}
                     </Text>
 
-                    <Image style={[styles.image, {width: imgWidth, height: (this.props.broadcast.pictures[0].height * imgWidth / this.props.broadcast.pictures[0].width), display: this.props.broadcast.pictures.count > 0 ? true : false}]} resizeMode='contain' source={(this.props.broadcast.pictures.count > 0 && this.props.broadcast.pictures[0].thumbImage) ? this.props.broadcast.pictures[0].thumbImage : ''}/>
+                    <CacheImage resizeMode='cover' style={[styles.image, {width: imgWidth, height: (this.props.broadcast.pictures[0].height * imgWidth / this.props.broadcast.pictures[0].width), display: this.props.broadcast.pictures.count > 0 ? true : false}]} resizeMode='cover' thumbil={this.props.broadcast.pictures[0].thumbnail} bigImage={this.props.broadcast.pictures[0].bigimg} thumbilPath={RNFS.DocumentDirectoryPath + 'broadcast_thumbil_' + this.props.broadcast.id + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'broadcast_' + this.props.broadcast.id + '.jpg'} placeholder={require('../images/header_place.png')}/>
+
 
                     <View style={styles.address}>
                         <Image style={styles.addressImage} resizeMode='contain' source={require('../images/broadcast_address.png')}/>
@@ -72,7 +77,6 @@ export default class BroadcastItem extends Component {
                         </View>
 
                     </View>
-                    {/*<Greeting name='Rexxar' />*/}
 
                 </View>
 

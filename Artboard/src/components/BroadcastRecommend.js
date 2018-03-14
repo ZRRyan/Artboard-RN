@@ -16,7 +16,7 @@ import BroadcastItem from '../components/BroadcastItem'
 
 export default class BroadcastRecommend extends Component {
 
-    pageCount = 3;
+    pageCount = 1;
     pageNo = 1;
     broadcasts = [];
 

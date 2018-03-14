@@ -1,4 +1,5 @@
 import {Component} from "react";
+import RNFS from 'react-native-fs';
 
 export default class NetRequest extends Component {
 
@@ -49,6 +50,36 @@ export default class NetRequest extends Component {
             .catch((error) => {
                 fail(error)
             })
+    }
+
+
+    static download(url, filePath, progress, succ, fail) {
+
+        const options = {
+            fromUrl: url,
+            toFile: filePath,
+            background: true,
+            begin: (res) => {
+
+            },
+            progress: (res) => {
+                let pro = res.bytesWritten / res.contentLength
+                progress(pro)
+            }
+        }
+
+        try {
+            const ret = RNFS.downloadFile(options);
+            ret.promise.then(res => {
+                succ(filePath)
+            }).catch(err => {
+                fail(err)
+            })
+        }
+        catch (err) {
+            fail(err)
+        }
+
     }
 
 }
