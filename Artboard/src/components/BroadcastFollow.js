@@ -4,116 +4,114 @@ import {
     StyleSheet,
     Text,
     View,
-    FlatList,
-    Dimensions,
-    Button
+    FlatList
 } from 'react-native';
+import AColor from "../config/AColor";
+import NetRequest from "../util/NetRequest";
+import Global from "../config/Global";
+import Storage from "../storage/Storage";
+import Login from "../actions/Login";
+import BroadcastItem from '../components/BroadcastItem'
 
-const {width,height}=Dimensions.get('window')
-export default class BroadcastFollow extends Component{
-    // 构造
+
+export default class BroadcastFollow extends Component {
+
+    pageCount = 3;
+    pageNo = 1;
+    broadcasts = [];
+
+
+
     constructor(props) {
         super(props);
+        this.state = {
+            refreshing: false,
+            sourceData: [],
+        };
     }
-    refreshing(){
-        let timer =  setTimeout(()=>{
-            clearTimeout(timer)
-            alert('刷新成功')
-        },1500)
+
+    componentWillMount() {
+        this.getFolllowBroadcast()
     }
-    _onload(){
-        let timer =  setTimeout(()=>{
-            clearTimeout(timer)
-            alert('加载成功')
-        },1500)
+
+    /*获取推荐广播*/
+    getFolllowBroadcast() {
+        let url = `${NetRequest.SERVER_DOMAIN}/broadcast/getFollowBroadcast`;
+        let params = {
+            uid: Global.user.uid,
+            token: Global.user.token,
+            pageNo: this.pageNo,
+            pageCount: this.pageCount,
+        };
+        NetRequest.get(url, params, (responseJson)=>{
+            if (responseJson.code == 200) {
+
+
+
+                if (this.pageNo == 1) {
+                    this.broadcasts = responseJson.data
+                } else {
+                    this.broadcasts = this.broadcasts.concat(responseJson.data)
+                }
+
+                this.setState({
+                    refreshing: false,
+                    sourceData: this.broadcasts
+                })
+            } else  {
+                Login.showAlert(responseJson.msg)
+            }
+        }, (error) => {
+            alert(error)
+        })
+
     }
+
     render() {
-        var data = [];
-        for (var i = 0; i < 100; i++) {
-            data.push({key: i, title: i + ''});
-        }
-
         return (
-            <View style={{flex:1}}>
-                <Button title='滚动到指定位置' onPress={()=>{
-                    this._flatList.scrollToOffset({animated: true, offset: 2000});
-                }}/>
-                <View style={{flex:1}}>
-                    <FlatList
-                        ref={(flatList)=>this._flatList = flatList}
-                        ListHeaderComponent={this._header}
-                        ListFooterComponent={this._footer}
-                        ItemSeparatorComponent={this._separator}
-                        renderItem={this._renderItem}
-                        onRefresh={this.refreshing}
-                        refreshing={false}
-                        onEndReachedThreshold={0}
-                        onEndReached={
-                            this._onload
-                        }
-                        numColumns ={3}
-                        columnWrapperStyle={{borderWidth:2,borderColor:'black',paddingLeft:20}}
 
-                        //horizontal={true}
+            <FlatList
+                data = {this.state.sourceData}
+                renderItem={({item}) => <BroadcastItem broadcast={item}/>}
+                ItemSeparatorComponent={ this.renderItemSeparatorComponent }
+                ListEmptyComponent={ this.renderEmptyView() }
+                refreshing={ this.state.refreshing }
+                onRefresh={ this.refresh }
+                onEndReachedThreshold={0.1}
+                onEndReached = {this.loadMore}
+                getItemLayout={(data, index) => ( { length: 40, offset: (40 + 1) * index + 50, index } )}
+            />
 
-                        getItemLayout={(data,index)=>(
-                            {length: 100, offset: (100+2) * index, index}
-                        )}
 
-                        data={data}>
-                    </FlatList>
-                </View>
-
-            </View>
-        );
+        )
     }
 
+    renderItemSeparatorComponent = ({highlighted}) => (
+        <View style={{ height:2, backgroundColor: '#FCF9FF'}}></View>
+    );
 
-    _renderItem = (item) => {
-        var txt = '第' + item.index + '个' + ' title=' + item.item.title;
-        var bgColor = item.index % 2 == 0 ? 'red' : 'blue';
-        return <Text style={[{flex:1,height:100,backgroundColor:bgColor},styles.txt]}>{txt}</Text>
-    }
+    renderEmptyView = () => (
+        <View style={{backgroundColor: 'red'}}></View>
+    );
 
-    _header = () => {
-        return <Text style={[styles.txt,{backgroundColor:'black'}]}>这是头部</Text>;
-    }
+    // 下拉刷新
+    refresh = () => {
 
-    _footer = () => {
-        return <Text style={[styles.txt,{backgroundColor:'black'}]}>这是尾部</Text>;
-    }
+        this.setState({
+            refreshing: true,
+        });
+        this.pageNo = 1
+        this.getFolllowBroadcast()
+    };
 
-    _separator = () => {
-        return <View style={{height:2,backgroundColor:'yellow'}}/>;
-    }
+    // 上拉加载更多
+    loadMore = () => {
 
+        this.setState({
+            refreshing: true,
+        });
+        this.pageNo = this.pageNo + 1
 
+        this.getFolllowBroadcast()
+    };
 }
-const styles=StyleSheet.create({
-    container:{
-
-    },
-    content:{
-        width:width,
-        height:height,
-        backgroundColor:'yellow',
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    cell:{
-        height:100,
-        backgroundColor:'purple',
-        alignItems:'center',
-        justifyContent:'center',
-        borderBottomColor:'#ececec',
-        borderBottomWidth:1
-
-    },
-    txt: {
-        textAlign: 'center',
-        textAlignVertical: 'center',
-        color: 'white',
-        fontSize: 30,
-    }
-
-})

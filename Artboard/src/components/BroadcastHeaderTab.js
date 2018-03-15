@@ -31,6 +31,13 @@ export default class HeaderTab extends Component {
         }
     }
 
+    setupBudge(index) {
+        // this.setState({
+        //     budge: index
+        // });
+        // alert(index)
+    }
+
     render() {
         return (
             <View style={styles.container}>

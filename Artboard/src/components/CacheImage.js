@@ -13,17 +13,21 @@ export default class CacheImage extends Component{
     constructor(props) {
         super(props);
         this.state = {
-            placeholder: this.props.placeholder,
+            placeholder: '',
             thumbil: '',
             bigImage: '',
             thumbilPath: '',
             bigImagePath: '',
             loadstate: 0, // 加载状态： 0:未加载， 1: 已加载缩略图， 2: 已加载大图
-            resource: this.props.placeholder,
+            resource: {uri:''},
         };
     }
 
     componentWillMount() {
+
+        if (this.props.display == false) {
+            return
+        }
 
         this.setState({
             placeholder: this.props.placeholder ? NetRequest.SERVER_DOMAIN + '/upload/' + this.props.placeholder : '',
@@ -31,6 +35,7 @@ export default class CacheImage extends Component{
             bigImage: this.props.bigImage ? this.props.bigImage : '',
             thumbilPath: this.props.thumbilPath ? this.props.thumbilPath : '',
             bigImagePath: this.props.bigImagePath ? this.props.bigImagePath : '',
+            resource: this.props.placeholder
         })
 
 
