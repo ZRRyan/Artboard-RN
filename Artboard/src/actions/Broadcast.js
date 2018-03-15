@@ -41,7 +41,11 @@ export default class Broadcast extends Component {
     onAnnotationEnd(e){
         const offSetX = e.nativeEvent.contentOffset.x;
 
-        index = offSetX >= listWidth ? 1 : 0
+        const currentIndex = offSetX/Dimensions.get('window').width;
+
+        // this.setState({
+        //     budge:currentIndex
+        // })
     }
 
 
