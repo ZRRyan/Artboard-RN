@@ -26,7 +26,7 @@ export default class BroadcastItem extends Component {
             <View style={styles.container}>
                 <View style={styles.left}>
 
-                    <CacheImage resizeMode='contain' style={[styles.header, {display: this.props.broadcast.pictures.count > 0 ? true : false}]} resizeMode='cover' thumbil={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbnail) ? (this.props.broadcast.sender.avatarPicture.thumbnail) : ''} bigImage={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.bigimg) ? this.props.broadcast.sender.avatarPicture.bigimg : ''} thumbilPath={RNFS.DocumentDirectoryPath + 'header_thumbil_' + this.props.broadcast.sender.avatarPicture.thumbnail + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'header_' + this.props.broadcast.sender.avatarPicture.bigimg + '.jpg'} placeholder={require('../images/header_place.png')}/>
+                    <CacheImage resizeMode='contain' style={[styles.header, {display:false}]}  thumbil={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbnail) ? (this.props.broadcast.sender.avatarPicture.thumbnail) : ''} bigImage={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.bigimg) ? this.props.broadcast.sender.avatarPicture.bigimg : ''} thumbilPath={RNFS.DocumentDirectoryPath + 'header_thumbil_' + this.props.broadcast.sender.avatarPicture.thumbnail + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'header_' + this.props.broadcast.sender.avatarPicture.bigimg + '.jpg'} placeholder={require('../images/header_place.png')}/>
 
                 </View>
                 <View style={styles.right}>
@@ -42,7 +42,7 @@ export default class BroadcastItem extends Component {
                         {this.props.broadcast.content}
                     </Text>
 
-                    <CacheImage resizeMode='cover' style={[styles.image, {width: imgWidth, height: (this.props.broadcast.pictures[0].height * imgWidth / this.props.broadcast.pictures[0].width), display: this.props.broadcast.pictures.count > 0 ? true : false}]} resizeMode='cover' thumbil={this.props.broadcast.pictures[0].thumbnail} bigImage={this.props.broadcast.pictures[0].bigimg} thumbilPath={RNFS.DocumentDirectoryPath + 'broadcast_thumbil_' + this.props.broadcast.id + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'broadcast_' + this.props.broadcast.id + '.jpg'} placeholder={require('../images/header_place.png')}/>
+                    <CacheImage resizeMode='cover' style={[styles.image, {width: imgWidth, height: (this.props.broadcast.pictures[0].height * imgWidth / this.props.broadcast.pictures[0].width), display:(this.props.broadcast.pictures.count > 0 ? true : false)}]}  resizeMode='cover' thumbil={this.props.broadcast.pictures[0].thumbnail} bigImage={this.props.broadcast.pictures[0].bigimg} thumbilPath={RNFS.DocumentDirectoryPath + 'broadcast_thumbil_' + this.props.broadcast.id + '.jpg'} bigImagePath={RNFS.DocumentDirectoryPath + 'broadcast_' + this.props.broadcast.id + '.jpg'} placeholder={require('../images/header_place.png')}/>
 
 
                     <View style={styles.address}>
