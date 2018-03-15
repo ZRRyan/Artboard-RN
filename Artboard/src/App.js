@@ -38,7 +38,7 @@ export default Tab = TabNavigator({
         },
     },
     Mess: {
-        screen: Discover,
+        screen: Mess,
         navigationOptions: {
             tabBarLabel: '聊天',
             tabBarIcon: ({ tintColor, focused }) => (

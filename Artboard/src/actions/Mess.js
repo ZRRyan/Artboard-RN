@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 
 
-class Mess extends React.Component {
+export default class Mess extends Component {
 
     //设置顶部导航栏的内容
     static navigationOptions = ({navigation, screenProps}) => ({
