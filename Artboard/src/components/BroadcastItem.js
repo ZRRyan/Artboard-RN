@@ -26,7 +26,7 @@ export default class BroadcastItem extends Component {
             <View style={styles.container}>
                 <View style={styles.left}>
 
-                    <CacheImage resizeMode='contain' style={[styles.header, {display:false}]}
+                    <CacheImage resizeMode='cover' style={[styles.header, {display:false}]}
                                 thumbil={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbnail) ? (this.props.broadcast.sender.avatarPicture.thumbnail) : ''}
                                 bigImage={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.bigimg) ? this.props.broadcast.sender.avatarPicture.bigimg : ''}
                                 thumbilPath={(this.props.broadcast.sender.avatarPicture && this.props.broadcast.sender.avatarPicture.thumbnail) ? RNFS.DocumentDirectoryPath + 'header_thumbil_' + this.props.broadcast.sender.avatarPicture.thumbnail + '.jpg' : ''}
@@ -138,15 +138,15 @@ const styles = StyleSheet.create({
         // backgroundColor: 'yellow',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        color: AColor.color_black
     },
     nickname: {
         fontSize: 15,
         fontWeight: 'bold',
+        color: AColor.color_black
     },
     time: {
         fontSize: 10,
-        color:AColor.color_black
+        color:AColor.color_lightGray
     },
     content: {
         fontSize: 15,
